@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    name: mycompany
+    url: jdbc:mysql://localhost:3306/mycompany?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 19011387
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.studentaccessment.bean
