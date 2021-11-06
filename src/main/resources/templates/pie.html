@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>饼状图</title>
+  <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+  <!-- 引入 echarts.js -->
+  <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+<div id="main" style="width: 800px;height:450px;" align="center"></div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    //数据加载完之前先显示一段简单的loading动画
+    myChart.showLoading();
+    var values=[];
+    //数据加载完之前先显示一段简单的loading动画
+    myChart.showLoading();
+    $.ajax({
+      type : "post",
+      async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+      url : "/show",    //请求发送到dataActiont处
+      data : {},
+      dataType : "json",        //返回数据形式为json
+      success : function(data) {
+        //请求成功时执行该函数内容，result即为服务器返回的json对象
+        if (data) {
+          for(var i=1;i<data.length;i++){
+            var test={"value":data[i].age, "name":data[i].username};
+            values.push(test);
+
+          }
+
+          myChart.hideLoading();    //隐藏加载动画
+          myChart.setOption(
+                  {
+                    title: {
+                      text: '爱情公寓人物受欢迎度统计',
+                      subtext: '纯属虚构',
+                      left: 'center'
+                    },
+                    legend: {
+                      orient: 'vertical',
+                      left: 'left',
+                      data: values
+                    },
+                    series: [
+                      {
+                        name: '物料来源',
+                        type: 'pie',
+                        radius: '60%',
+                        center: ['50%', '50%'],
+                        data:values,
+                        itemStyle: {
+                          emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                        }
+                      }
+                    ]
+                  }
+          );
+        }
+      },
+      error : function(errorMsg) {
+        //请求失败时执行该函数
+        alert("图表请求数据失败!");
+        myChart.hideLoading();
+      }
+    });//end ajax
+  });//刷新方法结束
+</script>
+</body>
+</html>
