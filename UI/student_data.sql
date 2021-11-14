@@ -14,6 +14,13 @@ CREATE TABLE `student` (
   `student3` varchar(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `commitEvent`(
+    `pid` int NOT NULL,
+    `pname` varchar(45) NOT NULL,
+    `commitDate` DATE ,
+    `totalCommit` int NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- 每位学生提交总数表（由该表产生项目小组总提交数以及每个同学的总提交数，以及显示一个同学基本信息）
 INSERT INTO `student` (`id`, `studentname`,`project`,`totalCommits`) VALUES
 (1,'何淇', 'Student-Grade-Accessment-System',30),

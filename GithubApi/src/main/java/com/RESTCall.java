@@ -7,7 +7,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 
+
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class RESTCall {
@@ -17,16 +19,16 @@ public class RESTCall {
     }
     String makeRESTCall(String restUrl, String acceptHeaderValue,String token)
             throws ClientProtocolException, IOException {
-
         Request request = Request.Get(restUrl);
         if (acceptHeaderValue != null && !acceptHeaderValue.isBlank()) {
             request.addHeader("Accept", acceptHeaderValue);
         }
-        if(token!=null)
-        request.addHeader("access_token", token);
+        if(token!=null){
+            request.addHeader("access_token", token);
+        }
         else
             System.out.println(restUrl);
-
+        request.addHeader("User-Agent", "Mozilla/5.0");
         Content content = request.execute().returnContent();
         String jsonString = content.asString();
         //System.out.println("content = " + jsonString);
@@ -100,7 +102,8 @@ public class RESTCall {
         //String str= r.makeRESTCall("https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events");
         //r.parseEvent(str);
         String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
-        String token="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";
+        //String token="28765232539e7ec571d1a97543c2063aa3c3b54e";//APP
+        String token="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";//personal
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){
             for (String key : row.keySet()){
