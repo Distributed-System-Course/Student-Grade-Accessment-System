@@ -1,6 +1,8 @@
 package com.example.crud.controller;
 
+import com.example.crud.entity.CommitEvent;
 import com.example.crud.entity.Project;
+import com.example.crud.service.CommitEventService;
 import com.example.crud.service.ProdjectService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ProjectController {
     @Autowired
     ProdjectService prodjectService;
+
     //产品信息的展示
     @RequestMapping("/plist")
     public String list(Model model ,@RequestParam(value = "start", defaultValue = "0") int start,

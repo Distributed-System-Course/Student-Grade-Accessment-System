@@ -1,11 +1,5 @@
 # Student-Grade-Accessment-System
-一个测试
+curl 的使用
 
-1
-
-2
-
-3
-
-4
+ curl -v -H "Authorization: token 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" https://api.github.com/rate_limit
 

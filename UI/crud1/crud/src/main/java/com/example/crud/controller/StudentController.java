@@ -1,9 +1,13 @@
 package com.example.crud.controller;
 
+import com.RESTCall;
+import com.example.crud.entity.CommitEvent;
 import com.example.crud.entity.Student;
+import com.example.crud.service.CommitEventService;
 import com.example.crud.service.StudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.internal.LinkedTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +15,38 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 @Controller
 public class StudentController {
     @Autowired
     private StudentService studentService; //注入StudentService
+    @Autowired//它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。
+    private CommitEventService commitEventService;
+    boolean flag=false;
+    void commitEventUpdate(){
+        com.RESTCall restCall =new RESTCall();
+        String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
+        String token="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";//personal
+        ArrayList<LinkedTreeMap<String,Object>> res= restCall.returnTable(url,token);
+        for (LinkedTreeMap<String,Object> row:res){
+            if(row.keySet().size()==6){
+                CommitEvent commitEvent = new CommitEvent();
 
+                if (row.get("author").equals("mucerhq"))
+                    commitEvent.setPid(1);
+                else if (row.get("author").equals("zhao-yanqing"))
+                    commitEvent.setPid(3);
+                else if (row.get("author").equals("LILY123-lang"))
+                    commitEvent.setPid(2);
+                String temp= (String) row.get("date");
+                commitEvent.setCommitDate(temp);
+                Integer t= (Integer) row.get("addLines")- (Integer) row.get("deleteLines");
+                commitEvent.setTotalCommit(t.intValue());
+                commitEventService.save(commitEvent);
+            }
+        }
+    }
     //跳转到水球图页面
     @RequestMapping("/progress")
     public String progress() {
@@ -57,6 +87,13 @@ public class StudentController {
     @RequestMapping( "/show")
     @ResponseBody
     public List<Student> show() {
+        if (!flag){
+            commitEventUpdate();
+            commitEventService.updateStudent();
+        }
+        //更新list
+        flag=true;
+
         List<Student> students=studentService.studentList();
         return students;
 

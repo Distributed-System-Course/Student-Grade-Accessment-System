@@ -21,26 +21,28 @@ public class CommitEventService {
     /*
      * 添加事件
      * */
-    void save(CommitEvent event){
-        commitEventMapper.save(event);
+    public void save(CommitEvent event){
+        addevent(event.getPid(),event.getCommitDate(), event.getTotalCommit());
     }
 
-    void addevent(@Param("pid") String pid
-            ,@Param("pname") String pname
+    public void addevent(@Param("pid") int pid
             ,@Param("commitDate") String commitDate
-            ,@Param("totalCommit") String totalCommit){
+            ,@Param("totalCommit") int totalCommit){
         commitEventMapper.addevent(
-                pid,pname,commitDate,totalCommit
+                pid,commitDate,totalCommit
         );
     }
     /*
      * 根据date,id查询用户某天的提交
      * */
-    CommitEvent findEventByIdAndDate(
+    public CommitEvent findEventByIdAndDate(
             @Param("pid") String pid
             ,@Param("date") String date){
         return commitEventMapper.findEventByIdAndDate(
           pid,date
         );
+    }
+    public void updateStudent(){
+
     }
 }

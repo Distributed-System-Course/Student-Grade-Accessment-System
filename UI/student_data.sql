@@ -16,9 +16,9 @@ CREATE TABLE `student` (
 
 CREATE TABLE `commitEvent`(
     `pid` int NOT NULL,
-    `pname` varchar(45) NOT NULL,
     `commitDate` DATE ,
-    `totalCommit` int NOT NULL
+    `totalCommit` int NOT NULL,
+    primary key (pid,commitDate)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 每位学生提交总数表（由该表产生项目小组总提交数以及每个同学的总提交数，以及显示一个同学基本信息）

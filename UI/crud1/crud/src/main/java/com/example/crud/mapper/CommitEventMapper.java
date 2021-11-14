@@ -17,15 +17,14 @@ public interface CommitEventMapper {
     * */
     void save(CommitEvent event);
 
-    void addevent(@Param("pid") String pid
-            ,@Param("pname") String pname
+    void addevent(@Param("pid") int pid
             ,@Param("commitDate") String commitDate
-            ,@Param("totalCommit") String totalCommit);
+            ,@Param("totalCommit") int totalCommit);
     /*
     * 根据date,id查询用户某天的提交
     * */
     CommitEvent findEventByIdAndDate(
             @Param("pid") String pid
             ,@Param("date") String date);
-
+    void updateStudent();
 }

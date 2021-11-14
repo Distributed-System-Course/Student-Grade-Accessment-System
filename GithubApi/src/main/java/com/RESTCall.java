@@ -28,7 +28,7 @@ public class RESTCall {
             request.addHeader("Accept", acceptHeaderValue);
         }
         if(token!=null){
-            request.addHeader("access_token", token);
+            request.addHeader("Authorization", "token "+token);
         }
         else
             System.out.println(restUrl);
@@ -123,17 +123,25 @@ public class RESTCall {
         //r.parseEvent(str);
         String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
         //String token="28765232539e7ec571d1a97543c2063aa3c3b54e";//APP
-        String token="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";//personal
+        //String token="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";//personal
+        //String token="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";//personal
+        String token="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";//personal
+        long startTime = System.currentTimeMillis(); //程序开始记录时间
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){
-            for (String key : row.keySet()){
-                System.out.print(key+"\t\t\t\t\t\t");
+            if(row.keySet().size()==6){
+                for (String key : row.keySet()){
+                    System.out.print(key+"\t\t\t\t\t\t");
+                }
+                System.out.println();
+                for (String key : row.keySet()){
+                    System.out.print(row.get(key)+"\t\t\t\t\t\t");
+                }
+                System.out.println();
             }
-            System.out.println();
-            for (String key : row.keySet()){
-                System.out.print(row.get(key)+"\t\t\t\t\t\t");
-            }
-            System.out.println();
         }
+        long endTime   = System.currentTimeMillis(); //程序结束记录时间
+        long TotalTime = endTime - startTime;       //总消耗时间
+        System.out.println("耗时："+TotalTime/1000);
     }
 }

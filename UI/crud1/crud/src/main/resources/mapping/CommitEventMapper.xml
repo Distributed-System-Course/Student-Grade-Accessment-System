@@ -2,20 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.crud.mapper.CommitEventMapper">
 
-    <!--??????-->
+    <!--?????commit-->
     <select id="committeemen" resultType="CommitEvent">
         select * from test1.commitevent
     </select>
 
     <!--????-->
     <insert id="addevent" parameterType="CommitEvent" keyProperty="id" >
-        replace INTO test1.commitevent(pid,pname,commitDate,totalCommit)
-        VALUES (#{pid},#{pname},#{commitDate},#{totalCommit})
+        replace INTO test1.commitevent(pid,commitDate,totalCommit)
+        VALUES (#{pid},#{commitDate},#{totalCommit})
     </insert>
 
     <!--??date,id?????????-->
     <select id="findEventByIdAndDate" resultType="CommitEvent">
         select * from test1.commitevent where commitDate = #{pid} and commitDate=#{date}
     </select>
-
+    <!-- ??students-->
+    <update id="updateStudent">
+        update student
+            inner join (
+                select commitevent.pid,sum(commitevent.totalCommit) total
+                from commitevent
+                group by commitevent.pid
+            ) t on t.pid=student.id
+        set totalCommits=t.total
+        where student.id=t.pid
+    </update>
 </mapper>
