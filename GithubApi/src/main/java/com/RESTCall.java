@@ -10,7 +10,11 @@ import org.apache.http.client.fluent.Request;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class RESTCall {
     ArrayList<LinkedTreeMap<String,Object>> table;
@@ -40,6 +44,22 @@ public class RESTCall {
     String makeRESTCall(String restUrl) throws ClientProtocolException, IOException {
         return makeRESTCall(restUrl, null,null);
     }
+    String parseDate(String raw){
+        String str=raw;
+        str=str.replaceAll("T"," ");
+        str=str.replaceAll("Z","");
+        SimpleDateFormat beijingSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        beijingSDF.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));//北京时区
+        SimpleDateFormat gitSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //git 时间格式
+        gitSDF.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));  // 设置git时区
+        Date date = null;  // 将字符串时间按git时间解析成Date对象
+        try {
+            date = gitSDF.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return beijingSDF.format(date).toString();
+    }
     void parseEvent(String jsonString,String token){
         //Json的解析类对象
         JsonParser parser = new JsonParser();
@@ -52,7 +72,7 @@ public class RESTCall {
             if (root==null) break;
             LinkedTreeMap<String,Object> row= new LinkedTreeMap<String,Object>();
             row.put("author",root.getActor().getLogin());
-            row.put("data",root.getCreated_at());
+            row.put("date",parseDate(root.getCreated_at()));
             row.put("project",root.getRepo().getName());
             if(root.getPayload().getCommits()!=null&& !root.getPayload().getCommits().isEmpty()){
                 String commitUrl=root.getPayload().getCommits().get(0).getUrl();
@@ -111,7 +131,7 @@ public class RESTCall {
             }
             System.out.println();
             for (String key : row.keySet()){
-                System.out.print(row.get(key)+"\t");
+                System.out.print(row.get(key)+"\t\t\t\t\t\t");
             }
             System.out.println();
         }

@@ -4,36 +4,18 @@
 
     <!--??????-->
     <select id="committeemen" resultType="CommitEvent">
-        select * from commitevent
+        select * from test1.commitevent
     </select>
-
 
     <!--????-->
-    <insert id="addstudent" parameterType="Student" keyProperty="id" >
-        INSERT INTO student(studentname,project,totalCommits) VALUES (#{studentname},#{project},#{totalCommits})
-    </insert>
-    <!-- ??????   -->
-    <insert id="addproject" parameterType="Project" keyProperty="id" >
-        INSERT INTO project(pname,student1,student2) VALUES (#{pname},#{student1},#{student2})
+    <insert id="addevent" parameterType="CommitEvent" keyProperty="id" >
+        replace INTO test1.commitevent(pid,pname,commitDate,totalCommit)
+        VALUES (#{pid},#{pname},#{commitDate},#{totalCommit})
     </insert>
 
-    <!--????-->
-    <delete id="delete" parameterType="int">
-        delete from student where id = #{id}
-    </delete>
-
-    <!--??id????-->
-    <select id="findStudentById" resultType="Student">
-        select * from student where id = #{id}
+    <!--??date,id?????????-->
+    <select id="findEventByIdAndDate" resultType="CommitEvent">
+        select * from test1.commitevent where commitDate = #{pid} and commitDate=#{date}
     </select>
-    <!--??id????-->
-    <select id="findStudentByStudentName" resultType="Student">
-        select * from student where studentname = #{studentname}
-    </select>
-
-    <!--??????-->
-    <update id="update"  parameterType="student">
-        update student set studentname=#{studentname},project=#{project} where id=#{id}
-    </update>
 
 </mapper>

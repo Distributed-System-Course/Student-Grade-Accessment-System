@@ -6,7 +6,6 @@ public class Project {
     private String student1;
     private String student2;
     private String student3;
-    private int id;
 
     public int getPid() {
         return pid;
@@ -48,14 +47,6 @@ public class Project {
         this.student3 = student3;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Project{" +
@@ -64,7 +55,6 @@ public class Project {
                 ", intr='" + student1 + '\'' +
                 ", cprice=" + student2 +
                 ", tprice=" + student3 +
-                ", id=" + id +
                 '}';
     }
 }
