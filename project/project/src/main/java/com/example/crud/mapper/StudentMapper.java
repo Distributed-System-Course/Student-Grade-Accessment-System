@@ -28,8 +28,6 @@ public interface StudentMapper {
      * 根据id查找用户
      */
     Student findStudentById(int id);
-
-
     /*
      * 更改用户信息
      */

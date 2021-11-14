@@ -3,10 +3,10 @@ CREATE TABLE `student` (
   `id` int NOT NULL,
   `studentname` varchar(45) NOT NULL,
   `project` varchar(36) NOT NULL,
-  `totalCommits` int NOT NULL,
   `totalAddLines` int NOT NULL,
   `totalDeleteLines` int NOT NULL,
   `totalchangelines` int NOT NULL
+  `totalCommits` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  
  CREATE TABLE `project` (
@@ -80,3 +80,4 @@ INSERT INTO `commit` (`name`, `date`,`project`,`addLines`,`deleteLines`,`totalch
 ('庞基玮','2021-10-22','irrasb', 20, 10,100),
 ('李金欣','2021-10-23','irrasb', 20, 10,100),
 ('庞基玮','2021-10-23','irrasb', 20, 10,100);
+
