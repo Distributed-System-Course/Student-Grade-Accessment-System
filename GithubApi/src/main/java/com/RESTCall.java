@@ -14,12 +14,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.*;
 
 public class RESTCall {
     ArrayList<LinkedTreeMap<String,Object>> table;
+    ThreadPoolExecutor poolExecutor;
     public RESTCall(){
         table= new ArrayList<LinkedTreeMap<String,Object>>();
+        poolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1024);
     }
     String makeRESTCall(String restUrl, String acceptHeaderValue,String token)
             throws ClientProtocolException, IOException {
@@ -67,18 +71,37 @@ public class RESTCall {
         JsonArray jsonArray = parser.parse(jsonString).getAsJsonArray();
         Gson gson = new Gson();
         //对于数组形的json
+        List<FutureTask<LinkedTreeMap<String,Object>>> results= new ArrayList<>();//多线程结果
+        //
         for(JsonElement jsonElement:jsonArray){
             POJO.Event.Root root = gson.fromJson(jsonElement , POJO.Event.Root.class);
             if (root==null) break;
+
+
             LinkedTreeMap<String,Object> row= new LinkedTreeMap<String,Object>();
             row.put("author",root.getActor().getLogin());
             row.put("date",parseDate(root.getCreated_at()));
             row.put("project",root.getRepo().getName());
             if(root.getPayload().getCommits()!=null&& !root.getPayload().getCommits().isEmpty()){
                 String commitUrl=root.getPayload().getCommits().get(0).getUrl();
-                parseCommit(commitUrl,token,row);
+                FutureTask<LinkedTreeMap<String,Object>> task = new FutureTask<LinkedTreeMap<String,Object>>((
+                )->{
+                    parseCommit(commitUrl,token,row);
+                    return row;
+                });
+                results.add(task);
+                poolExecutor.execute(task);
             }
-            table.add(row);
+            //table.add(row);
+        }
+        for(FutureTask<LinkedTreeMap<String, Object>> result:results) {
+            try {
+                table.add(result.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
     void parseCommit(String url,String token,LinkedTreeMap<String,Object>row){
@@ -106,7 +129,7 @@ public class RESTCall {
                 restCall.parseEvent(str,token);
                 res.addAll(restCall.table);
             }
-
+            poolExecutor.shutdownNow();
             //str = this.makeRESTCall(restfurl,null,token);
             //this.parseEvent(str);
             //ArrayList<LinkedTreeMap<String,Object>> res = new ArrayList<LinkedTreeMap<String,Object>>();
@@ -114,18 +137,41 @@ public class RESTCall {
             return res;
         } catch (IOException e) {
             e.printStackTrace();
+            poolExecutor.shutdown();
             return null;
+        }
+    }
+
+    void shutdownAndAwaitTermination(ExecutorService pool,int timeout) {
+        pool.shutdown(); // Disable new tasks from being submitted
+        try {
+            // Wait a while for existing tasks to terminate
+            if (!pool.awaitTermination(timeout, TimeUnit.SECONDS)) {
+                pool.shutdownNow(); // Cancel currently executing tasks
+                // Wait a while for tasks to respond to being cancelled
+                if (!pool.awaitTermination(timeout, TimeUnit.SECONDS))
+                    System.err.println("Pool did not terminate");
+            }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            pool.shutdownNow();
+            // Preserve interrupt status
+            Thread.currentThread().interrupt();
         }
     }
     public static void main(String[] args) {
         RESTCall r= new RESTCall();
         //String str= r.makeRESTCall("https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events");
         //r.parseEvent(str);
-        String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
+        //String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
+        String prefix="https://api.github.com/repos/Distributed-System-Course/";
+        String suffix="/events";
+        String projectName="Student-Grade-Accessment-System";
+        String url=prefix+projectName+suffix;
         //String token="28765232539e7ec571d1a97543c2063aa3c3b54e";//APP
         //String token="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";//personal
         //String token="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";//personal
-        String token="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";//personal
+        String token="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";//personal
         long startTime = System.currentTimeMillis(); //程序开始记录时间
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){
@@ -143,5 +189,6 @@ public class RESTCall {
         long endTime   = System.currentTimeMillis(); //程序结束记录时间
         long TotalTime = endTime - startTime;       //总消耗时间
         System.out.println("耗时："+TotalTime/1000);
+        System.exit(0);
     }
 }

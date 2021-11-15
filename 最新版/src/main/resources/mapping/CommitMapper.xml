@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crud.mapper.CommitEventMapper">
+
+    <!--查询所有commit-->
+    <select id="committeemen" resultType="CommitEvent">
+        select * from test1.commitevent
+    </select>
+
+    <!--添加一条event-->
+    <insert id="addevent" parameterType="CommitEvent" keyProperty="id" >
+        replace INTO test1.commitevent(pid,commitDate,project,totalAddLines,totalDeleteLines,totalChangeLines)
+        VALUES (#{pid},#{commitDate},#{project},#{totalAddLines},#{totalDeleteLines},#{totalChangeLines})
+    </insert>
+
+    <!--更据pid date 来查找event-->
+    <select id="findEventByIdAndDate" resultType="CommitEvent">
+        select * from test1.commitevent where commitDate = #{pid} and commitDate=#{date}
+    </select>
+    <!-- 统计更新students-->
+    <update id="updateStudent">
+        update student
+            inner join (
+            select commitevent.pid,
+            sum(commitevent.totalAddLines) addLines,
+            sum(commitevent.totalDeleteLines) deleteLines,
+            sum(commitevent.totalChangeLines) changeLines,
+            count(pid) times
+            from commitevent
+            group by commitevent.pid
+            ) t on t.pid=student.id
+            set totalAddLines=t.addLines,totalDeleteLines=t.deleteLines,
+                totalChangeLines=t.changeLines,totalCommits=t.times
+        where student.id=t.pid
+    </update>
+</mapper>
