@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redshop.mapper.productMapper">
+
+    <resultMap type="com.example.redshop.domain.product" id="productInfo">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="seller_id" property="sellerId"/>
+        <result column="produce_date" property="produce_date"/>
+        <result column="selected_num" property="selectedNum"/>
+        <result column="max_num" property="maxNum"/>
+        <result column="price" property="price"/>
+        <result column="info" property="info"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="productInfo" >
+
+        SELECT *
+        from s_product
+        <where>
+            <if test="name!=null"> and name LIKE concat("%",#{name},"%") </if>
+            <if test="sellerId!=null"> and seller_id LIKE concat("%",#{sellerId},"%") </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_product
+        <where>
+            <if test="name!=null"> and name LIKE concat("%",#{name},"%") </if>
+            <if test="sellerId!=null"> and seller_id LIKE concat("%",#{sellerId},"%") </if>
+        </where>
+    </select>
+
+    <insert id="addproduct" parameterType="product">
+        insert into s_product(name,seller_id,produce_date,selected_num, max_num,price, info)
+        values(#{name},#{sellerId},#{produce_date},#{selectedNum},#{maxNum},#{price},#{info})
+    </insert>
+
+    <delete id="deleteproduct" parameterType="java.util.ArrayList">
+        delete from s_product
+        <where>
+            id in
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <update id="editproduct" parameterType="product">
+        update s_product set name = #{name}, seller_id = #{sellerId}, produce_date = #{produce_date}, selected_num = #{selectedNum}, max_num = #{maxNum}, price = #{price}, info = #{info}  where id = #{id}
+    </update>
+
+    <update id="addbuyerNum" parameterType="int">
+         update s_product
+         set selected_num = (case
+            when selected_num = max_num then 50
+            when selected_num &lt; max_num then selected_num+1
+            end
+         )
+         where id = #{productId}
+    </update>
+
+    <update id="deletebuyerNum" parameterType="int">
+         update s_product
+         set selected_num = selected_num-1
+         where id = #{productId}
+    </update>
+
+    <select id="getproductById" parameterType="java.util.List" resultType="product">
+        select *
+        from s_product
+        <where>
+            id in
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="findByName" parameterType="java.lang.String" resultType="int">
+        select id from s_product where name = #{name}
+    </select>
+
+</mapper>

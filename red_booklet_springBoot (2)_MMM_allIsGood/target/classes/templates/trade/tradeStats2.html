@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>卖家_交易统计</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/css/demo.css}">
+    <script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/easyui/js/validateExtends.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(function() {
+
+
+
+            //搜索按钮监听事件
+            $(".search-trade-btn").click(function(){
+                var searchKey = $(this).attr('key');
+                //var sellerId = $("#sellerList").val();
+                var sellername = $("#sellerList").val();
+
+                if(sellername == null || sellername == ''){
+                    $.messager.alert("消息提醒","请选择卖家!","info");
+                    return;
+                }
+                $.ajax({
+                    url:   [[@{/trade/gettradeStatsList2}]] + "?sellername="+sellername+"&searchType="+searchKey,
+                    dataType:'json',
+                    success:function(rst){
+                        if(rst.type == "success"){
+                            var option;
+                            if(searchKey == 'range'){
+                                option = {
+                                    title: {
+                                        text: '卖家：'+rst.sellerName
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'cross',
+                                            crossStyle: {
+                                                color: '#999'
+                                            }
+                                        }
+                                    },
+                                    legend: {
+                                        data:['交易金额区间分布']
+                                    },
+                                    xAxis: {
+                                        data: rst.rangeList
+                                    },
+                                    yAxis: {type: 'value'},
+                                    series: [{
+                                        name: '交易金额区间分布',
+                                        type: 'bar',
+                                        data: rst.numberList
+                                    }]
+                                };
+                            }else{
+                                option = {
+                                    title: {
+                                        text: '卖家：'+rst.sellerName
+                                    },
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        axisPointer: {
+                                            type: 'cross',
+                                            crossStyle: {
+                                                color: '#999'
+                                            }
+                                        }
+                                    },
+                                    legend: {
+                                        data:['交易金额分布']
+                                    },
+                                    xAxis: {
+                                        data: rst.avgList
+                                    },
+                                    yAxis: {type: 'value'},
+                                    series: [{
+                                        name: '交易金额分布',
+                                        type: 'bar',
+                                        data: rst.tradeList
+                                    }]
+                                };
+                            }
+                            showCharts(option);
+                        }else{
+                            $.messager.alert("消息提醒","获取数据出错!","info");
+                        }
+                    }
+                })
+
+            });
+
+        });
+        /*]]>*/
+    </script>
+</head>
+<body style="padding:0px;">
+<div class="panel-header"><div class="panel-title panel-with-icon">交易金额信息统计</div><div class="panel-icon icon-more"></div><div class="panel-tool"></div></div>
+<!-- 工具栏 -->
+<div id="toolbar" class="datagrid-toolbar">
+    <div style="margin-top: 3px;">
+        卖家：<input id="sellerList" class="easyui-textbox" name="sellerList" />
+        <a href="javascript:;" class="easyui-linkbutton search-trade-btn" key="range" data-options="iconCls:'icon-sum',plain:true">区间统计图</a>
+        <a href="javascript:;" class="easyui-linkbutton search-trade-btn" key="avg" data-options="iconCls:'icon-sum',plain:true">平均统计图</a>
+    </div>
+</div>
+<div id="charts-div" style="width:100%;height:500px;"></div>
+</body>
+<script type="text/javascript" th:src="@{/easyui/js/echarts.common.min.js}"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('charts-div'));
+
+    function showCharts(option){
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    // 指定图表的配置项和数据
+
+
+</script>
+</html>
