@@ -166,12 +166,12 @@ public class RESTCall {
         //String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
         String prefix="https://api.github.com/repos/Distributed-System-Course/";
         String suffix="/events";
-        String projectName="Student-Grade-Accessment-System";
+        String projectName="Team-System";
         String url=prefix+projectName+suffix;
         //String token="28765232539e7ec571d1a97543c2063aa3c3b54e";//APP
         //String token="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";//personal
         //String token="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";//personal
-        String token="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";//personal
+        String token="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";//personal
         long startTime = System.currentTimeMillis(); //程序开始记录时间
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){

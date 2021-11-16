@@ -25,7 +25,27 @@ CREATE TABLE `student` (
   totalChangeLines int NOT NULL,
   primary key (pid,commitDate)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+create table `studentnickname`(
+    `pid` int NOT NULL,
+    `pname` varchar(45) NOT NULL,
+    `nickname` varchar(45) not null ,
+    primary key (pid)
+);
+INSERT INTO `studentnickname`
+    (`pid`, `pname`, `nickname`)VALUES
+    (1,'何淇', 'mucerhq'),
+    (2,'武伊雪', 'LILY123-lang'),
+    (3,'赵琰晴', 'zhao-yanqing'),
+    (4,'马加辰', 'MichaelJackchen'),
+    (5,'王君', '2994856495'),
+    (6,'杨皓天', 'MuBai-Argo'),
+    (7,'陈浩楠', 'chn0213'),
+    (8,'赵浚博', 'BestJob2000'),
+    (9,'赵松青', 'LibertyChaser'),
+    (10,'毛泓涛', 'tsagaanbar'),
+    (11,'南佳霖', 'Nan-J'),
+    (12,'李金欣', 'TxjbWwdh'),
+    (13,'庞基玮', 'pangjiwei');
 -- 每位学生提交总数表（由该表产生项目小组总提交数以及每个同学的总提交数，以及显示一个同学基本信息）
 INSERT INTO `student` (`id`, `studentname`, `project`, `totalCommits`, `totalAddLines`, `totalDeleteLines`,
                        totalChangeLines)VALUES
@@ -40,8 +60,8 @@ INSERT INTO `student` (`id`, `studentname`, `project`, `totalCommits`, `totalAdd
 (9,'赵松青', 'project-grouping-system',20,200,200,200),
 (10,'毛泓涛', 'project-grouping-system',80,200,200,200),
 (11,'南佳霖', 'project-grouping-system',20,200,200,200),
-(12,'李金欣', 'irrasb',20,200,200,200),
-(13,'庞基玮', 'irrasb',20,200,200,200);
+(12,'李金欣', 'MUC2019CS-IRRASb',20,200,200,200),
+(13,'庞基玮', 'MUC2019CS-IRRASb',20,200,200,200);
 
 -- 每个项目及其成员
 INSERT INTO `project` (`pid`, `pname`,`student1`,`student2`,`student3`) VALUES

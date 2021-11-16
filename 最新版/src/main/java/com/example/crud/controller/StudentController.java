@@ -35,26 +35,60 @@ public class StudentController {
                 "DataGripTools",
                 "Team-System"
         };
-        List<String> projects = new ArrayList<>(List.of(names));
-        List<FutureTask<?>> results= new ArrayList<>();
-        String prefix="https://api.github.com/repos/Distributed-System-Course/";
-        String suffix="/events";
-        String projectName="Student-Grade-Accessment-System";
-        String url=prefix+projectName+suffix;
 
-        com.RESTCall restCall =new RESTCall();
-        String token="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";//personal
-        ArrayList<LinkedTreeMap<String,Object>> res= restCall.returnTable(url,token);
+        List<FutureTask<ArrayList<LinkedTreeMap<String,Object>>>> results= new ArrayList<>();
+        ArrayList<LinkedTreeMap<String,Object>> res = new ArrayList<>();
+        for(String projectName:names){
+            String prefix="https://api.github.com/repos/Distributed-System-Course/";
+            String suffix="/events";
+            String url=prefix+projectName+suffix;
+
+            com.RESTCall restCall =new RESTCall();
+            String token="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";//personal
+            FutureTask<ArrayList<LinkedTreeMap<String,Object>>>
+                    task = new FutureTask<ArrayList<LinkedTreeMap<String,Object>>>(()->{
+                ArrayList<LinkedTreeMap<String,Object>> table= restCall.returnTable(url,token);
+                return table;
+            });
+            results.add(task);
+            poolExecutor.execute(task);
+        }
+        for(FutureTask<ArrayList<LinkedTreeMap<String,Object>>> result:results) {
+            try {
+                res.addAll(result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
         for (LinkedTreeMap<String,Object> row:res){
             if(row.keySet().size()==6){
                 CommitEvent commitEvent = new CommitEvent();
-
                 if (row.get("author").equals("mucerhq"))
                     commitEvent.setPid(1);
-                else if (row.get("author").equals("zhao-yanqing"))
-                    commitEvent.setPid(3);
                 else if (row.get("author").equals("LILY123-lang"))
                     commitEvent.setPid(2);
+                else if (row.get("author").equals("zhao-yanqing"))
+                    commitEvent.setPid(3);
+                else if (row.get("author").equals("MichaelJackchen"))
+                    commitEvent.setPid(4);
+                else if (row.get("author").equals("2994856495"))
+                    commitEvent.setPid(5);
+                else if (row.get("author").equals("MuBai-Argo"))
+                    commitEvent.setPid(6);
+                else if (row.get("author").equals("chn0213"))
+                    commitEvent.setPid(7);
+                else if (row.get("author").equals("BestJob2000"))
+                    commitEvent.setPid(8);
+                else if (row.get("author").equals("LibertyChaser"))
+                    commitEvent.setPid(9);
+                else if (row.get("author").equals("tsagaanbar"))
+                    commitEvent.setPid(10);
+                else if (row.get("author").equals("Nan-J"))
+                    commitEvent.setPid(11);
+                else if (row.get("author").equals("TxjbWwdh"))
+                    commitEvent.setPid(12);
+                else if (row.get("author").equals("pangjiwei"))
+                    commitEvent.setPid(13);
                 commitEvent.setCommitDate((String) row.get("date"));
                 String project=(String) row.get("project");
                 commitEvent.setProject(project.split("/")[1]);
@@ -64,6 +98,7 @@ public class StudentController {
                 commitEventService.save(commitEvent);
             }
         }
+
     }
     //跳转到水球图页面
     @RequestMapping("/progress")
