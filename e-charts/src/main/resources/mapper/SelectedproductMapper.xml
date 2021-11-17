@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redshop.mapper.SelectedproductMapper">
+
+    <resultMap type="com.example.redshop.domain.Selectedproduct" id="SelectedproductInfo">
+        <result column="id" property="id"/>
+        <result column="buyer_id" property="buyerId"/>
+        <result column="product_id" property="productId"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="SelectedproductInfo" >
+
+        SELECT *
+        from s_selected_product
+        <where>
+            <if test="buyerId!=null"> and buyer_id LIKE concat("%",#{buyerId},"%") </if>
+            <if test="productId!=null"> and product_id LIKE concat("%",#{productId},"%") </if>
+            <if test="buyer_id!=null"> and buyer_id = #{buyerid} </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_selected_product
+        <where>
+            <if test="buyerId!=null"> and buyer_id LIKE concat("%",#{buyerId},"%") </if>
+            <if test="productId!=null"> and product_id LIKE concat("%",#{productId},"%") </if>
+            <if test="buyer_id!=null"> and buyer_id = #{buyerid} </if>
+        </where>
+    </select>
+
+    <insert id="addSelectedproduct" parameterType="Selectedproduct">
+        insert into s_selected_product(buyer_id,product_id)
+        values(#{buyerId},#{productId})
+    </insert>
+
+    <delete id="deleteSelectedproduct" parameterType="int">
+        delete from s_selected_product where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="int" resultMap="SelectedproductInfo" >
+        select  * from s_selected_product where id = #{id}
+    </select>
+
+
+    <select id="findBySelectedproduct" parameterType="Selectedproduct" resultMap="SelectedproductInfo" >
+        select * from s_selected_product
+        where buyer_id = #{buyerId} and product_id = #{productId}
+    </select>
+
+    <select id="isbuyerId" parameterType="int" resultMap="SelectedproductInfo" >
+        select * from s_selected_product
+        where buyer_id = #{id}
+    </select>
+
+    <select id="getAllBySid" parameterType="int" resultMap="SelectedproductInfo" >
+        select * from s_selected_product
+        where buyer_id = #{buyerid}
+    </select>
+</mapper>
