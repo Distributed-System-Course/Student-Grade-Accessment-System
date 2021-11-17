@@ -168,10 +168,7 @@ public class RESTCall {
         String suffix="/events";
         String projectName="Team-System";
         String url=prefix+projectName+suffix;
-        //String token="28765232539e7ec571d1a97543c2063aa3c3b54e";//APP
-        //String token="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";//personal
-        //String token="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";//personal
-        String token="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";//personal
+        String token="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";//personal
         long startTime = System.currentTimeMillis(); //程序开始记录时间
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){
