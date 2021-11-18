@@ -20,9 +20,9 @@ public interface CommitEventMapper {
     void addevent(@Param("pid") int pid
             ,@Param("commitDate") String commitDate
             ,@Param("project") String project
-            ,@Param("totalAddLines") int totalAddLines
-            ,@Param("totalDeleteLines") int totalDeleteLines
-            ,@Param("totalChangeLines") int totalChangeLines);
+            ,@Param("addLines") int addLines
+            ,@Param("deleteLines") int deleteLines
+            ,@Param("changeLines") int changeLines);
     /*
      * 根据date,id查询用户某天的提交
      * */

@@ -23,11 +23,15 @@ public class RESTCall {
     ThreadPoolExecutor poolExecutor;
     public RESTCall(){
         table= new ArrayList<LinkedTreeMap<String,Object>>();
-        poolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1024);
+        poolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+        System.setProperty("http.proxySet", "true");
+        System.setProperty("http.proxyHost", "127.0.0.1");
+        System.setProperty("http.proxyPort", "7891");
     }
     String makeRESTCall(String restUrl, String acceptHeaderValue,String token)
             throws ClientProtocolException, IOException {
         Request request = Request.Get(restUrl);
+        //request.socketTimeout(30000);
         if (acceptHeaderValue != null && !acceptHeaderValue.isBlank()) {
             request.addHeader("Accept", acceptHeaderValue);
         }
@@ -166,9 +170,9 @@ public class RESTCall {
         //String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
         String prefix="https://api.github.com/repos/Distributed-System-Course/";
         String suffix="/events";
-        String projectName="Team-System";
+        String projectName="Student-Grade-Accessment-System";
         String url=prefix+projectName+suffix;
-        String token="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";//personal
+        String token="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";//personal
         long startTime = System.currentTimeMillis(); //程序开始记录时间
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){

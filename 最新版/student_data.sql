@@ -4,9 +4,9 @@ CREATE TABLE `student` (
   `studentname` varchar(45) NOT NULL,
   `project` varchar(36) NOT NULL,
   `totalCommits` int NOT NULL,
-  `totalAddLines` int NOT NULL,
-  `totalDeleteLines` int NOT NULL,
-  totalChangeLines int NOT NULL
+  `addLines` int NOT NULL,
+  `deleteLines` int NOT NULL,
+  changeLines int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  
  CREATE TABLE `project` (
@@ -20,9 +20,9 @@ CREATE TABLE `student` (
   `pid` int NOT NULL,
   `commitDate` datetime NOT NULL,
   `project` varchar(36) NOT NULL,
-  `totalAddLines` int NOT NULL,
-  `totalDeleteLines` int NOT NULL,
-  totalChangeLines int NOT NULL,
+  `addLines` int NOT NULL,
+  `deleteLines` int NOT NULL,
+  `changeLines` int NOT NULL,
   primary key (pid,commitDate)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 create table `studentnickname`(
@@ -47,8 +47,8 @@ INSERT INTO `studentnickname`
     (12,'李金欣', 'TxjbWwdh'),
     (13,'庞基玮', 'pangjiwei');
 -- 每位学生提交总数表（由该表产生项目小组总提交数以及每个同学的总提交数，以及显示一个同学基本信息）
-INSERT INTO `student` (`id`, `studentname`, `project`, `totalCommits`, `totalAddLines`, `totalDeleteLines`,
-                       totalChangeLines)VALUES
+INSERT INTO `student` (`id`, `studentname`, `project`, `totalCommits`, `addLines`, `deleteLines`,
+                       changeLines)VALUES
 (1,'何淇', 'Student-Grade-Accessment-System',30,200,200,200),
 (2,'武伊雪', 'Student-Grade-Accessment-System',30,200,200,200),
 (3,'赵琰晴', 'Student-Grade-Accessment-System',30,200,200,200),
@@ -72,7 +72,7 @@ INSERT INTO `project` (`pid`, `pname`,`student1`,`student2`,`student3`) VALUES
 (5,'irrasb', '李金欣', '庞基玮','');
 
 -- 每个commit信息（一个同学会出现多次，一个项目也会出现多次，同时有当天的时间、提交数、修改行数等等信息）
-INSERT INTO `commitevent` (`pid`, `commitDate`,`project`,`totalAddLines`,`totalDeleteLines`,totalChangeLines) VALUES
+INSERT INTO `commitevent` (`pid`, `commitDate`,`project`,`addLines`,`deleteLines`,changeLines) VALUES
 ('赵琰晴','2021-10-21','Student-Grade-Accessment-System', 20, 10,100),
 ('赵琰晴','2021-10-21','Student-Grade-Accessment-System', 20, 10,100),
 ('何淇','2021-10-21','Student-Grade-Accessment-System', 20, 10,100),

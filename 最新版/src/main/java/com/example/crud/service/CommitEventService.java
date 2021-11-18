@@ -23,18 +23,18 @@ public class CommitEventService {
      * */
     public void save(CommitEvent event){
         addevent(event.getPid(),event.getCommitDate(),event.getProject(),
-                event.getAddLines(),event.getDeleteLines(),event.getTotalChangeLines());
+                event.getAddLines(),event.getDeleteLines(),event.getChangeLines());
     }
 
     public void addevent(
             @Param("pid") int pid
             ,@Param("commitDate") String commitDate
             ,@Param("project") String project
-            ,@Param("totalAddLines") int totalAddLines
-            ,@Param("totalDeleteLines") int totalDeleteLines
-            ,@Param("totalChangeLines") int totalChangeLines){
+            ,@Param("addLines") int addLines
+            ,@Param("deleteLines") int deleteLines
+            ,@Param("changeLines") int changeLines){
         commitEventMapper.addevent(
-                pid,commitDate,project,totalAddLines,totalDeleteLines,totalChangeLines
+                pid,commitDate,project,addLines,deleteLines,changeLines
         );
     }
     /*

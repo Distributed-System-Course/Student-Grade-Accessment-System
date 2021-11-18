@@ -6,7 +6,7 @@ public class CommitEvent {
     private String project;
     private int addLines;
     private int deleteLines;
-    private int totalChangeLines;
+    private int changeLines;
 
     public int getPid(){
         return pid;
@@ -28,8 +28,8 @@ public class CommitEvent {
         return deleteLines;
     }
 
-    public int getTotalChangeLines(){
-        return totalChangeLines;
+    public int getChangeLines(){
+        return changeLines;
     }
 
     public void setDeleteLines(int deleteLines) {
@@ -52,8 +52,8 @@ public class CommitEvent {
         this.project = project;
     }
 
-    public void setTotalChangeLines(int totalChangeLines) {
-        this.totalChangeLines = totalChangeLines;
+    public void setChangeLines(int changeLines) {
+        this.changeLines = changeLines;
     }
 
     public String toString(){
@@ -63,7 +63,7 @@ public class CommitEvent {
                 ", project='" + project + '\'' +
                 ", addLines='" + addLines + '\'' +
                 ", deleteLines='" + deleteLines + '\'' +
-                ", totalChangeLines='" + totalChangeLines +
+                ", changeLines='" + changeLines +
                 '}';
     }
 }

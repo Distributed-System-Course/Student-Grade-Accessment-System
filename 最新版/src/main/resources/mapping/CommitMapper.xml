@@ -9,8 +9,8 @@
 
     <!--添加一条event-->
     <insert id="addevent" parameterType="CommitEvent" keyProperty="id" >
-        replace INTO test1.commitevent(pid,commitDate,project,totalAddLines,totalDeleteLines,totalChangeLines)
-        VALUES (#{pid},#{commitDate},#{project},#{totalAddLines},#{totalDeleteLines},#{totalChangeLines})
+        replace INTO test1.commitevent(pid,commitDate,project,addLines,deleteLines,changeLines)
+        VALUES (#{pid},#{commitDate},#{project},#{addLines},#{deleteLines},#{changeLines})
     </insert>
 
     <!--更据pid date 来查找event-->
@@ -19,14 +19,14 @@
     </select>
     <!-- 统计更新students-->
     <update id="updateStudent">
-        update student
+        update test1.student
             inner join (
-            select commitevent.pid,
-            sum(commitevent.totalAddLines) addLines,
-            sum(commitevent.totalDeleteLines) deleteLines,
-            sum(commitevent.totalChangeLines) changeLines,
+            select test1.commitevent.pid,
+            sum(test1.commitevent.addLines) addLines,
+            sum(test1.commitevent.deleteLines) deleteLines,
+            sum(test1.commitevent.changeLines) changeLines,
             count(pid) times
-            from commitevent
+            from test1.commitevent
             group by commitevent.pid
             ) t on t.pid=student.id
             set totalAddLines=t.addLines,totalDeleteLines=t.deleteLines,

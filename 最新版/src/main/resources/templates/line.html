@@ -51,6 +51,20 @@
                             type: 'value'
                         },
                         series: [{
+                            //一个尝试
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true, //开启显示
+                                        position: 'top', //在上方显示
+                                        textStyle: { //数值样式
+                                            color: 'black',
+                                            fontSize: 14
+                                        }
+                                    }
+                                }
+                            },
+                            ///
                             // 根据名字对应到相应的系列
                             name: '学生提交情况',
                             type: 'line',

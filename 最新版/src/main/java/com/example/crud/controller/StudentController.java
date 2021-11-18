@@ -44,7 +44,7 @@ public class StudentController {
             String url=prefix+projectName+suffix;
 
             com.RESTCall restCall =new RESTCall();
-            String token="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";//personal
+            String token="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";//personal
             FutureTask<ArrayList<LinkedTreeMap<String,Object>>>
                     task = new FutureTask<ArrayList<LinkedTreeMap<String,Object>>>(()->{
                 ArrayList<LinkedTreeMap<String,Object>> table= restCall.returnTable(url,token);
@@ -94,7 +94,7 @@ public class StudentController {
                 commitEvent.setProject(project.split("/")[1]);
                 commitEvent.setAddLines((int) row.get("addLines"));
                 commitEvent.setDeleteLines((int) row.get("deleteLines"));
-                commitEvent.setTotalChangeLines((int) row.get("totalLines"));
+                commitEvent.setChangeLines((int) row.get("totalLines"));
                 commitEventService.save(commitEvent);
             }
         }
@@ -140,11 +140,11 @@ public class StudentController {
     @RequestMapping( "/show")
     @ResponseBody
     public List<Student> show() {
+        flag=true;
         if (!flag){
             commitEventUpdate();
             commitEventService.updateStudent();
         }
-        flag=true;
         //
         List<Student> students=studentService.studentList();
         return students;
