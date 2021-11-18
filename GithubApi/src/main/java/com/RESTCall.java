@@ -26,6 +26,7 @@ public class RESTCall {
         poolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
     }
     public void setProxy(String host,String port){
+        System.setProperty("java.net.useSystemProxies", "true");
         System.setProperty("http.proxySet", "true");
         System.setProperty("http.proxyHost", host);
         System.setProperty("http.proxyPort", port);
@@ -33,6 +34,7 @@ public class RESTCall {
     String makeRESTCall(String restUrl, String acceptHeaderValue,String token)
             throws ClientProtocolException, IOException {
         Request request = Request.Get(restUrl);
+        //request.viaProxy("127.0.0.1:7891");
         //request.socketTimeout(30000);
         if (acceptHeaderValue != null && !acceptHeaderValue.isBlank()) {
             request.addHeader("Accept", acceptHeaderValue);
@@ -42,6 +44,7 @@ public class RESTCall {
         }
         else
             System.out.println(restUrl);
+
         request.addHeader("User-Agent", "Mozilla/5.0");
         Content content = request.execute().returnContent();
         String jsonString = content.asString();
@@ -167,7 +170,7 @@ public class RESTCall {
     }
     public static void main(String[] args) {
         RESTCall r= new RESTCall();
-        r.setProxy("127.0.0.1","7891");
+        //r.setProxy("127.0.0.1","7891");
         //String str= r.makeRESTCall("https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events");
         //r.parseEvent(str);
         //String url="https://api.github.com/repos/Distributed-System-Course/Student-Grade-Accessment-System/events";
@@ -176,6 +179,7 @@ public class RESTCall {
         String projectName="Student-Grade-Accessment-System";
         String url=prefix+projectName+suffix;
         String token="";//personal
+        url="https://api.github.com/repos/Distributed-System-Course/MUC2019CS-IRRASa/events";
         long startTime = System.currentTimeMillis(); //程序开始记录时间
         ArrayList<LinkedTreeMap<String,Object>> res= r.returnTable(url,token);
         for (LinkedTreeMap<String,Object> row:res){

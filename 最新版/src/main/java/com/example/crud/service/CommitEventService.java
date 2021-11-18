@@ -12,6 +12,9 @@ import java.util.List;
 public class CommitEventService {
     @Autowired
     CommitEventMapper commitEventMapper;//mapper注入
+    public List<CommitEvent> clist(){
+        return commitEventMapper.clist();
+    }
     /*
      * 查询所有事件
      * */
@@ -42,12 +45,15 @@ public class CommitEventService {
      * */
     public CommitEvent findEventByIdAndDate(
             @Param("pid") String pid
-            ,@Param("date") String date){
+            ,@Param("commitDate") String commitDate){
         return commitEventMapper.findEventByIdAndDate(
-                pid,date
+                pid,commitDate
         );
     }
     public void updateStudent(){
         commitEventMapper.updateStudent();
+    }
+    public List<CommitEvent> findCommitByProject(String project){
+        return commitEventMapper.findCommitByProject(project);
     }
 }

@@ -30,6 +30,7 @@ public class StudentController {
         ThreadPoolExecutor poolExecutor =(ThreadPoolExecutor) Executors.newCachedThreadPool();
         String[] names ={
                 "Student-Grade-Accessment-System",
+                "MUC2019CS-IRRASa",
                 "MUC2019CS-IRRASb",
                 "Piggy-ProjG",
                 "DataGripTools",
@@ -44,7 +45,7 @@ public class StudentController {
             String url=prefix+projectName+suffix;
 
             com.RESTCall restCall =new RESTCall();
-            String token="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";//personal
+            String token="";//personal
             FutureTask<ArrayList<LinkedTreeMap<String,Object>>>
                     task = new FutureTask<ArrayList<LinkedTreeMap<String,Object>>>(()->{
                 ArrayList<LinkedTreeMap<String,Object>> table= restCall.returnTable(url,token);
@@ -129,7 +130,7 @@ public class StudentController {
     //学生信息展示
     @RequestMapping("/List")
     public String studentList(Model model ,@RequestParam(value = "start", defaultValue = "0") int start,
-    @RequestParam(value = "size", defaultValue = "7") int size) throws Exception{
+                              @RequestParam(value = "size", defaultValue = "7") int size) throws Exception{
         PageHelper.startPage(start,size,"id asc");
         List<Student> students = studentService.studentList();
         PageInfo<Student> page = new PageInfo<>(students);
