@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+</head>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+<script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+   <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+<body>
+<div class="container theme-showcase" role="main" style="width: 100%">
+    <div class="container" style="width: 100%">
+        <div class="row clearfix" style="width: 100%">
+            <div class="col-md-12 column" style="width: 100%">
+<div class="panel panel-info" style="width: 100%">
+
+    <div class="panel-heading" style="text-align:left;">
+        <h3 >
+            #项目详细信息
+        </h3>
+    </div>
+    <div class="panel-body" style="height:400px;overflow-y:auto;padding:10px;">
+        <div class="test-box">
+        <fieldset class="layui-elem-field " >
+
+            <div style="float: left;margin-left: 50px" >
+                <h3 align="center" style="color:#FD482C">项目名称</h3>
+                <p  th:text="${product.pname}" align="center"></p>
+            </div>
+            <div style="float: left;margin-left: 180px" >
+                <h3 align="center" style="color:#FD482C">总增加数</h3>
+                <p  th:text="￥+${product.addLines}" align="center"></p>
+            </div>
+            <div style="float: left;margin-left: 180px" >
+                <h3 align="center" style="color:#FD482C">总删除数</h3>
+                <p  th:text="￥+${product.deleteLines}" align="center"></p>
+            </div>
+            <div style="float: left;margin-left: 180px" >
+                <h3 align="center" style="color:#FD482C">总修改数</h3>
+                <p  th:text="￥+${product.totalchangelines}" align="center"></p>
+            </div>
+            <div class="layui-field-box" style="float: right" >
+
+                <div  th:with="percent=${product.addLines}/${product.totalchangelines}" >
+
+                    <canvas class="thewater" id="c" ></canvas>
+                    <input type="text" id="r" th:value="${#numbers.formatDecimal(percent * 100, 1, 1)}" style="display: none">
+
+                </div>
+<!--                <div align="center" >-->
+<!--                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+<!--                        立即支持-->
+<!--                    </button>-->
+<!--                </div>-->
+            </div>
+
+        </fieldset>
+<!--            th:text="${product.intr}"-->
+
+        <h3 align="center" style="color:#FD482C" >项目介绍</h3>
+        <div   align="center">
+            <h5>1.项目组队系统</h5>
+            <p>老师给出的项目例如20个，班上60个学生每个人可以选择至少3个，第一个为首选，其余的为备选，填写腾讯文档或者EXCEL表格</p>
+            <p>设计算法为学生所选项目自动分组，3~5人一组，最后在网页上展示出各个项目组及成员情况。</p>
+            <h5>2.学生成绩评价系统</h5>
+            <p>实现从Gitee repositories中收集数据，展示每个项目进度及个人贡献，最后以图表展示形式做出报告。</p>
+            <p>例如统计每个学生的commits总数，lines of code changed per week per user per project。</p>
+            <p>主要功能通过访问Gitee API(java)实现数据获取，并且生成一个Library，提供给同组的成员调用，然后在web页面展示结果。</p>
+            <h5>3.智能房源查找系统</h5>
+            <p>实现在某个指定地点（比如民大）查找周边距离最近、房租、房型满足客户需求的房源，并展示出查询结果。</p>
+            <p>需要采用爬虫技术从某些房产中介搜索房源信息，并借助百度或者腾讯地图API计算最短路径。</p>
+            <h5>4.数据抽取整合工具</h5>
+            <p>疫情期间各商场、银行等公共场所要求来访人员登记，数据以Excel格式进行记录保存，但是每天出入人员的数据可能有重复的</p>
+            <p>或者信息不全，也可能有其他异常情况，要求将电子表格整合在一起，识别并删除重复数据，提供一个可用的、干净的数据集</p>
+            <p>存入数据库，并具备特定查询功能的数据展示功能。</p>
+<!--            <p><b>在发起人使用尚筹网众筹平台提供的服务之前，请务必认真阅读本协议的全部内容。阅读本协议的过程中，如您不同意本协议或其中任何条款约定，您应立即停止注册（如：点击确认等后续操作），撤销注册流程。本协议一经发起人点击确认并同意接受，即产生法律效力。-->
+<!--            </b></p>-->
+<!--            <h5>第1条  签约主体</h5>-->
+<!--            <p>本协议由尚筹网网站（包括但不限于www.atcrowd.com及尚筹网众筹平台）的所有者及其关联公司（以下简称为“尚筹网”），在尚筹网众筹平台（zc.atcrowd.com）与登录、使用尚筹网众筹平台的项目发起人（以下简称 “发起人”）共同签署（签约地：江苏省南京市）。</p>-->
+<!--            <h5>第2条  定 义</h5>-->
+<!--            <p>2.1 尚筹网众筹平台：尚筹网众筹平台是一个可以让发起人的项目计划变为现实的梦想平台，是“致力于中国创造，实现创新创业者梦想”的平台，发起人可以在尚筹网众筹平台上发起创新项目的筹款需求，并承诺提供不同形式的回报给项目的支持者，支持者可通过预购发起人的项目成果或相关产品来表达对发起人的支持。</p>-->
+<!--            <p>2.2发起人：指在尚筹网众筹平台上发起项目的法人。</p>-->
+<!--            <p>2.3支持者：指对发起人的项目表示支持的尚筹网用户，支持者通过支付一定金额的预购款的方式，预购项目的衍生成果及/或相关产品。</p>-->
+<!--            <p>2.4筹款成功：指在发起人设定的时间内，发起人与支持者订立的以项目成果及/或相关产品为回报标的的合同金额达到或超过了发起人设定的筹款金额。</p>-->
+<!--            <p>2.5项目成功：指项目筹款成功后，发起人执行项目计划并最终形成项目成果，并按照支持者预购订单的约定向支持者交付项目成果及/或相关产品。</p><p>-->
+<!--        </p><h5>第3条  立约背景</h5>-->
+<!--            <p>3.1为保护支持者的合法权益，规范发起人的行为，维护尚筹网众筹平台的秩序，特拟定本协议。</p>-->
+<!--            <p>3.2尚筹网为发起人与支持者之间的交易行为提供平台网络空间、技术服务和支持，尚筹网并不是发起人或支持者中的任何一方，所有交易仅存在于发起人和支持者之间，使用尚筹网众筹平台产生的法律后果由发起人与支持者自行承担。</p>-->
+<!--            <p>3.3尚筹网会对所发起的项目的合理性、项目内容与回报的匹配度等进行形式审核，审核通过后才可发布到尚筹网众筹平台，但是项目通过尚筹网的审核并不代表尚筹网保证项目合法或不侵犯任何第三方的权利，发起人仍需对所发起的项目独立承担法律责任。</p>-->
+<!--            <h5>第4条  协议生效和适用范围</h5>-->
+<!--            <p>4.1本协议内容包括协议正文以及尚筹网网站已经发布的或将来可能发布的各类规则、操作流程。所有规则为本协议不可分割的一部分，与协议正文具有同等的法律效力。</p>-->
+<!--            <p>4.2当发起人在尚筹网众筹平台发起项目时，通过网络页面点击确认或以其他方式选择接受本协议，即表示与尚筹网达成协议并接受本协议的全部约定内容，本协议自发起人通过网络页面点击确认或以其他方式选择接受本协议之时起生效。本协议生效后，发起人不应以未阅读或不接受本协议的内容为由，主张本协议无效或要求撤销本协议。</p>-->
+<!--            <p>4.3尚筹网有权根据需要不定时修改本协议或各类规则、操作流程，如本协议有任何变更，尚筹网将在网站上以公示形式通知，且无需征得发起人的事先同意。修改后的协议及规则一经公示即生效，成为本协议的一部分。如发起人继续登录或使用尚筹网众筹平台的，即视为已阅读并接受修改后的协议。</p>-->
+<!--            <p>4.4发起人应该按照本协议约定行使权利并履行义务。如不能接受本协议的约定，包括但不限于不能接受修订后的协议及各类规则，则应立即停止使用尚筹网众筹平台提供的服务。如发起人继续使用服务，则表示同意并接受本协议及各类规则的约束。</p>-->
+<!--            <h5>第5条  项目发起人资格</h5>-->
+<!--            <p>5.1项目发起人应为尚筹网众筹平台的注册用户，完全理解并接受本协议。</p>-->
+<!--            <p>5.2发起人可以为法人或其他组织且应是在中国境内合法成立、注册可独立承担法律责任的法律实体。</p>-->
+<!--            <p>5.3发起人在发起项目前，应通过尚筹网易付宝完成必要的身份认证和资质认证，包括但不限于营业执照、法人身份证等的实名认证。发起人在发起项目时同意并授权尚筹网众筹平台公示认证信息。</p>-->
+<!--            <p>5.4发起人应按照尚筹网的要求开立账户，以接收支持者的支持款。</p>-->
+<!--            <p>5.5如发起人申请发起的项目为带有公益性质的项目，则发起人应是合法成立的公益组织或与合法成立的公益组织共同发起项目。</p>-->
+<!--            <p>5.6尚筹网众筹平台将根据申请发起的项目类型不同，对发起人需要满足的其他资格进行限定和要求。</p>-->
+<!--            <h5>第6条  项目内容规范</h5>-->
+<!--            <p>6.1在尚筹网众筹平台上发起的项目应为具有创新性质且具有可执行性的项目，且项目目标须是明确、具体、可衡量的，如制作一个实物产品、拍一部微电影或完成一件艺术创作等。不得在无实质项目内容的情况下纯粹为公益组织发起募捐或以发起类似“资助奖学金”、“资助我去旅游”等为满足发起人个人需求之目的筹款。</p>-->
+<!--            <p>6.2项目内容须符合法律法规及尚筹网网站的相关规定；尚筹网众筹平台有权对项目提出特殊要求。不得抄袭、盗用他人的成果发起众筹项目，创意类产品必须为原创。</p>-->
+<!--            <p>6.3项目的内容必须包含“我想要做什么事情”、“项目风险”、“项目回报”、“为什么需要支持”等信息。同时，应向项目支持者充分说明项目存在的风险及挑战，以便于项目支持者对项目有全面充分的了解，从而独立慎重做出是否投资的决定。</p>-->
+<!--            <p>6.4项目内容及发起人上传的相关项目信息（包含但不限于文字、图片、视频等）须为发起人原创，如非发起人原创，则发起人应已获得权利人的相应授权，且权利人允许发起人转授权给尚筹网及尚筹网的关联公司在尚筹网网站及尚筹网关联公司的其他官方网站及线下媒体出于宣传尚筹网众筹平台的目的而进行永久的免费宣传、推广、使用。</p>-->
+<!--            <p>6.5项目不得含有攻击性、侮辱性言论，不得含有违反国家法律法规、政策的内容及其他尚筹网认为不适宜的内容。包括但不限于以下内容：</p>-->
+<!--            <p>6.5.1违反国家法律规定的违禁品，如毒品、枪支弹药及管制刀具相关；</p>-->
+<!--            <p>6.5.2非法、色情、淫秽、赌博、暴力、恐怖、反动、政治与宗教相关；</p>-->
+<!--            <p>6.5.3开办公司、网站、店铺等相关；</p>-->
+<!--            <p>6.5.4其他国家法律规定和尚筹网网站规定的禁限售等违禁品信息。</p>-->
+<!--            <p>6.6项目回报发放完成前不允许对已经完成生产的商品进行销售，公益相关项目除外。</p>-->
+<!--            <p>6.7 项目的排他性，项目在尚筹网众筹平台募集期内不得在其他任意平台同时发起类似项目或进行销售。一经发现，项目强行下架，并追究违约责任。</p>-->
+<!--            <p>6.8尚筹网众筹平台对项目的审核仅针对项目的合理性、项目内容与回报的匹配度等进行审核，发起人应保证发起的项目内容合法，且不侵犯他人合法权益。</p>-->
+<!--            <p>6.9在尚筹网众筹平台上发起项目时，应明确众筹开始时间和结束时间，以及项目众筹成功后的回报时间。截止项目结束时间，如项目众筹金额等于或大于预定众筹金额，则项目众筹成功；如项目众筹金额低于预定众筹金额，则项目众筹失败。</p>-->
+<!--            <h5>第7条  项目回报规范</h5>-->
+        </div>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+<!--                <h4 class="modal-title" style="color:#2E2D3C;">感谢您的支持</h4>-->
+<!--                <h5 class="modal-title" style="color: magenta">项目执行成功会及时给您回报</h5>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <p style="color: #2E2D3C">请输入支持金额（将从您账户余额扣除）</p>-->
+<!--                <textarea class="form-control"></textarea>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button data-dismiss="modal" class="btn btn-default" type="button">我再想想</button>-->
+<!--                <button class="btn btn-primary" type="button">立即支持</button>-->
+<!--            </div>-->
+<!--        </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--    </div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+<!--</div>-->
+
+<div style="height:200px"></div>
+<script type="text/javascript">
+    var canvas = document.getElementById('c');
+    var ctx = canvas.getContext('2d');
+    var range = document.getElementById('r');
+
+    //range控件信息
+    var rangeValue = range.value;
+    var nowRange = 0; //用于做一个临时的range
+
+    //画布属性
+    var mW = canvas.width = 200;
+    var mH = canvas.height = 200;
+    var lineWidth = 2;
+
+    //圆属性
+    var r = mH / 2; //圆心
+    var cR = r - 16 * lineWidth; //圆半径
+
+    //Sin 曲线属性
+    var sX = 0;
+    var sY = mH / 2;
+    var axisLength = mW; //轴长
+    var waveWidth = 0.015 ; //波浪宽度,数越小越宽
+    var waveHeight = 6; //波浪高度,数越大越高
+    var speed = 0.1; //波浪速度，数越大速度越快
+    var xOffset = 0; //波浪x偏移量
+
+    ctx.lineWidth = lineWidth;
+
+    //画圈函数
+    var IsdrawCircled = false;
+    var drawCircle = function(){
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#1080d0';
+        ctx.arc(r, r, cR+5, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(r, r, cR, 0, 2 * Math.PI);
+        ctx.clip();
+
+    }
+
+    //画sin 曲线函数
+    var drawSin = function(xOffset){
+        ctx.save();
+
+        var points=[]; //用于存放绘制Sin曲线的点
+
+        ctx.beginPath();
+        //在整个轴长上取点
+        for(var x = sX; x < sX + axisLength; x += 20 / axisLength){
+            //此处坐标(x,y)的取点，依靠公式 “振幅高*sin(x*振幅宽 + 振幅偏移量)”
+            var y = -Math.sin((sX + x) * waveWidth + xOffset);
+
+            var dY = mH * (1 - nowRange / 100 );
+
+            points.push([x, dY + y * waveHeight]);
+            ctx.lineTo(x, dY + y * waveHeight);
+        }
+
+        //封闭路径
+        ctx.lineTo(axisLength, mH);
+        ctx.lineTo(sX, mH);
+        ctx.lineTo(points[0][0],points[0][1]);
+        ctx.fillStyle = '#1c86d1';
+        ctx.fill();
+
+        ctx.restore();
+    };
+
+    //写百分比文本函数
+    var drawText = function(){
+        ctx.save();
+
+        var size = 0.4*cR;
+        ctx.font = size + 'px Microsoft Yahei';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = "rgba(06, 85, 128, 0.8)";
+        ctx.fillText(~~nowRange + '%', r, r + size / 2);
+
+        ctx.restore();
+    };
+
+    var render = function(){
+        ctx.clearRect(0, 0, mW, mH);
+
+        rangeValue = range.value;
+
+        if(IsdrawCircled == false){
+            drawCircle();
+        }
+
+        if(nowRange <= rangeValue){
+            var tmp = 1;
+            nowRange += tmp;
+        }
+
+        if(nowRange > rangeValue){
+            var tmp = 1;
+            nowRange -= tmp;
+        }
+
+        drawSin(xOffset);
+        drawText();
+
+        xOffset += speed;
+        requestAnimationFrame(render);
+    }
+
+    render();
+</script>
+<script th:src="@{/static/layui/layui.js}"></script>
+</body>
+
+
+</html>
+

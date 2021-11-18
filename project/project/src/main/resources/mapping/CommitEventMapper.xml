@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crud.mapper.CommitEventMapper">
+
+    <!--查询所有用户-->
+<!--    <select id="clist" resultType="Commit">-->
+<!--        select name,date,sum(addLines) as addLines,sum(deleteLines) as deleteLines,sum(totalchangelines) as totalchangelines,count(name) as total_commits from commit where project='Student-Grade-Accessment-System' group by date,name;-->
+<!--    </select>-->
+    <select id="clist" resultType="CommitEvent">
+        select * from commitevent
+    </select>
+
+    <select id="findCommitByProject" resultType="CommitEvent">
+        select pid,commitDate,sum(addLines) as addLines,sum(deleteLines) as deleteLines,sum(changeLines) as changeLines,count(pid) as total_commits
+        from commitevent
+        where project=#{project}
+        group by commitDate,pid;
+    </select>
+</mapper>
