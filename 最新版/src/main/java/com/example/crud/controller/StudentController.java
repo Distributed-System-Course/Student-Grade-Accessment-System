@@ -44,7 +44,7 @@ public class StudentController {
             String url=prefix+projectName+suffix;
 
             com.RESTCall restCall =new RESTCall();
-            String token="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";//personal
+            String token="";//personal
             FutureTask<ArrayList<LinkedTreeMap<String,Object>>>
                     task = new FutureTask<ArrayList<LinkedTreeMap<String,Object>>>(()->{
                 ArrayList<LinkedTreeMap<String,Object>> table= restCall.returnTable(url,token);
