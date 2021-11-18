@@ -91,7 +91,6 @@ public class StudentController {
     public String show7() {
         return "bar_totalchangelines";
     }
-
     //用户添加操作
     @RequestMapping("/insert")
     public String addStudent(@RequestParam("studentname") String studentname,

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<script language="JavaScript">
+    function getString(){
+
+        $.ajax({
+            url:"http://localhost:8080/getAString.do",
+            type:"POST",
+            dataType:'json',
+            success: function( data ) {
+                if(data.success == true) {
+                    $(".divget").html("<strong>" + data.model + "</strong>  ");
+
+                }else{
+                    var errorInfo = data.error;
+                    var str = "";
+                    for(var p in errorInfo){
+                        str += p +":" + errorInfo[p];
+                    }
+                    $( ".divget" ).html( "<strong>" + str + "</strong>  " );
+
+                }
+
+            },
+
+        });
+    }
+
+
+    function update() {
+        var info = {
+            name: "",
+            passwd: "",
+            sex: ""
+        };
+
+        $.ajax({
+            url: "http://localhost:8080/update.do",
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(info),
+            success: function (data) {
+                if (data.success == true) {
+                    $(".update").html("<strong>" + JSON.stringify(data.model) + "</strong>  ");
+
+                } else {
+                    var errorInfo = data.error;
+                    var str = "";
+                    for (var p in errorInfo) {
+                        str += p + ":" + errorInfo[p];
+                    }
+                    $(".update").html("<strong>" + str + "</strong>  ");
+
+                }
+
+            }
+        });
+    }
+</script>
+
+<body>
+
+<form role="form" action="/getInfor" method="post">
+    Username: <input type="text" name="name" id="name">
+    <input type = "submit" id = "login" value = "login">
+</form>
+
+</body>
+</html>

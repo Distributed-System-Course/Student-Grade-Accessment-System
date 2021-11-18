@@ -8,7 +8,6 @@ public class Student {
     private int totalAddLines;
     private int totalDeleteLines;
     private int totalchangelines;
-
     public int getId() {
         return id;
     }
@@ -52,7 +51,6 @@ public class Student {
     public int getTotalchangelines(){
         return totalchangelines;
     }
-
 
     public String toString() {
         return "Student{" +
