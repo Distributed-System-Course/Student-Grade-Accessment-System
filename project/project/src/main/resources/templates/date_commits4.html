@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+<div id="main" style="width: 1300px;height:500px;"></div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        //数据加载完之前先显示一段简单的loading动画
+        myChart.showLoading();
+        // var names=[];    //横坐标数组（实际用来盛放X轴坐标值）
+        // var values=[];    //纵坐标数组（实际用来盛放Y坐标值）
+        var dates=[];
+        var date_existence={};
+        var students=[];
+        var student_existence={};
+        var student1_commits=[];
+        var student2_commits=[];
+        var student3_commits=[];
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/commits4",    //请求发送到dataActiont处
+            data : {},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+                    for(var i=0;i<result.length;i++){
+                        if(!date_existence[result[i].commitDate]){
+                            dates.push(result[i].commitDate);
+                            date_existence[result[i].commitDate]=1;
+                        }
+                    }
+                    for(var i=0;i<dates.length;i++){
+                        student1_commits[i]=0;
+                        student2_commits[i]=0;
+                        student3_commits[i]=0;
+                    }
+                    var j=0;
+                    students[0]='';
+                    students[1]='';
+                    students[2]='';
+                    for(var i=0;i<result.length;i++){
+                        if(!student_existence[result[i].name]){
+                            students[j]=result[i].name;
+                            j++;
+                            student_existence[result[i].name]=1;
+                        }
+                    }
+
+                    for(var i=0;i<dates.length;i++){
+                        for(var j=0;j<students.length;j++){
+                            for (var k=0;k<result.length;k++){
+                                if(result[k].commitDate==dates[i] && result[k].name==students[j]){
+                                    if(j==0){
+                                        student1_commits[i]=result[k].total_commits;
+                                    }
+                                    else if(j==1){
+                                        student2_commits[i]=result[k].total_commits;
+                                    }
+                                    else if(j==2){
+                                        student3_commits[i]=result[k].total_commits;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    myChart.hideLoading();    //隐藏加载动画
+                    myChart.setOption({
+                        //加载数据图表
+                        title:{
+                            text: '学生每日提交数统计图'
+                        },
+                        tooltip:{
+                            trigger:'axis',
+                            axisPointer:{
+                                type:'shadow'
+                            }
+                        },
+                        grid:{
+                            left:'3%',
+                            right:'4%',
+                            bottom:'3%',
+                            containLabel:true
+                        },
+                        legend: {
+                            // data:['每位学生提交总数']
+                        },
+                        xAxis: {
+                            type:'value'
+
+                        },
+                        yAxis: {
+                            // type: 'value'
+                            type:'category',
+                            data:dates
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            name: students[0],
+                            type: 'bar',
+                            stack:'total_commits',
+                            label:{
+                                show:true
+                            },
+                            emphasis:{
+                                focus:'series'
+                            },
+                            data: student1_commits
+                        },
+                            {
+                                // 根据名字对应到相应的系列
+                                name: students[1],
+                                type: 'bar',
+                                stack:'total_commits',
+                                label:{
+                                    show:true
+                                },
+                                emphasis:{
+                                    focus:'series'
+                                },
+                                data: student2_commits
+                            },
+                            {
+                                // 根据名字对应到相应的系列
+                                name: students[2],
+                                type: 'bar',
+                                stack:'total_commits',
+                                label:{
+                                    show:true
+                                },
+                                emphasis:{
+                                    focus:'series'
+                                },
+                                data: student3_commits
+                            }
+                        ]
+                    });
+                }
+            },
+            error : function(errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        });//end ajax
+    });
+
+</script>
+
+
+</body>
+
+
+</html>

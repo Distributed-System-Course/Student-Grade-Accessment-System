@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crud.mapper.StudentMapper">
+
+    <!--查询所有用户-->
+    <select id="studentList" resultType="Student">
+        select * from student
+    </select>
+
+    <!--登录验证-->
+    <select id="studentlogin" parameterType="Student" resultType="Student">
+    select * from student where studentname=#{studentname} and project=#{project}
+  </select>
+
+    <!--添加用户-->
+    <insert id="addstudent" parameterType="Student" keyProperty="id" >
+        INSERT INTO student(studentname,project,totalCommits) VALUES (#{studentname},#{project},#{totalCommits})
+    </insert>
+    <!-- 众筹项目申请   -->
+    <insert id="addproject" parameterType="Project" keyProperty="id" >
+        INSERT INTO project(pname,student1,student2) VALUES (#{pname},#{student1},#{student2})
+    </insert>
+
+    <!--删除用户-->
+    <delete id="delete" parameterType="int">
+        delete from student where id = #{id}
+    </delete>
+
+    <!--根据id查询用户-->
+    <select id="findStudentById" resultType="Student">
+        select * from student where id = #{id}
+    </select>
+    <!--根据id查询用户-->
+    <select id="findStudentByStudentName" resultType="Student">
+        select * from student where studentname = #{studentname}
+    </select>
+
+    <!--更改用户信息-->
+    <update id="update"  parameterType="student">
+        update student set studentname=#{studentname},project=#{project} where id=#{id}
+    </update>
+
+</mapper>
