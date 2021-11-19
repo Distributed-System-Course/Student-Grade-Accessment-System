@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GithubApi">
+    <output-path>$PROJECT_DIR$/out/artifacts/GithubApi</output-path>
+    <root id="archive" name="GithubApi.jar">
+      <element id="module-output" name="GithubApi" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/commons-codec/commons-codec/1.11/commons-codec-1.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/com/fasterxml/jackson/core/jackson-databind/2.13.0/jackson-databind-2.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/org/apache/httpcomponents/httpclient/4.5.9/httpclient-4.5.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/org/apache/httpcomponents/httpcore/4.4.11/httpcore-4.4.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/com/fasterxml/jackson/core/jackson-annotations/2.13.0/jackson-annotations-2.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/commons-io/commons-io/2.8.0/commons-io-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/org/kohsuke/github-api/1.135/github-api-1.135.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/org/apache/httpcomponents/fluent-hc/4.5.9/fluent-hc-4.5.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="C:/maven/apache-maven-3.8.3/com/fasterxml/jackson/core/jackson-core/2.13.0/jackson-core-2.13.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
