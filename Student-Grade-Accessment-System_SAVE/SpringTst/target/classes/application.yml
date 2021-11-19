@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    name: oilbank
+    url: jdbc:mysql://localhost:3306/oilbank?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublickeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #配置映射文件
+  type-aliases-package: com.example.springtst.bean #配置实体类
