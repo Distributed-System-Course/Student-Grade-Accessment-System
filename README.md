@@ -7,4 +7,8 @@
 
 ​		后端：maven，spring boot ，Mybatis，mysql
 
-​	
+​	接下来的准备：
+
+微服务：
+
+​	Spring cloud
