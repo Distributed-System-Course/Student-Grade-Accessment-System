@@ -1,13 +1,13 @@
 server:
   port: 8881
 
-#??????????
+#给微服务设置一个名字
 spring:
   application:
     name: userservice
-  #?????
+  #连接数据库
   datasource:
-    url: jdbc:mysql://localhost/mysql
+    url: jdbc:mysql://localhost/microservice
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -21,3 +21,4 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://localhost:8761/eureka/
+

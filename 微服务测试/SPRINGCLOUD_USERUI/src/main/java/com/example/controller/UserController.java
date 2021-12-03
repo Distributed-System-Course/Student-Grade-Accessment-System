@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -23,6 +24,7 @@ public class UserController {
         ResponseEntity<Result> objectResponseEntity = restTemplate.postForEntity(url,user ,Result.class);
         Result body = objectResponseEntity.getBody();
         // 当重微服务得到的Result对象的数据中code属性是1时表示，登录成功
+        //System.out.println(body.getCode());
         if(body.getCode()==1){
             return "redirect:/suc.html";
         }else{
