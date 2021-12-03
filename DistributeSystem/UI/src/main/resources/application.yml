@@ -1,0 +1,43 @@
+#界面一般是80端口
+server:
+  port: 8080
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://10.151.115.122:8761/eureka/ #http://localhost:8761/eureka/
+#给登录微服务设置一个名字
+spring:
+  application:
+    name: userui
+  #数据库配置
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test1?useUnicode=true&characterEncoding=UTF-8&userSSL=true&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    initial-size: 10
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+  #静态资源配置
+  mvc:
+    static-path-pattern: /static/**
+  #thymeleaf模板引擎配置
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+    servlet:
+      content-type: text/html
+mybatis:
+    #配置实体类的包路径
+    type-aliases-package: com.example.crud.entity
+    #配置对应的xml路径
+    mapper-locations: classpath:mapping/*.xml

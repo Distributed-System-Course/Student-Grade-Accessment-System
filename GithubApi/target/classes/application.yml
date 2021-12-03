@@ -1,0 +1,18 @@
+#界面一般是80端口
+server:
+  port: 8080
+
+#给登录微服务设置一个名字
+spring:
+  application:
+    name: GithubApi
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://10.151.115.122:8761/eureka/ #http://localhost:8761/eureka/

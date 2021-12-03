@@ -1,0 +1,17 @@
+#指定端口，默认是8761，不要改变
+server:
+  port: 8761
+
+eureka:
+  instance:
+    #将来注册到注册中心的微服务包括注册中心都是用ip地址
+    prefer-ip-address: true
+    hostname: 10.151.115.122 #localhost
+  client:
+    #是否注册到注册中心 （注册中心自己不需要注册）
+    register-with-eureka: false
+    #是否抓取注册中的注册信息
+    fetch-registry: false
+    #微服务和客户端用来注册和发现的地址
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
