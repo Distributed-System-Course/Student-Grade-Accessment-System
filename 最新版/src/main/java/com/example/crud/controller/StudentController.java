@@ -141,11 +141,11 @@ public class StudentController {
     @RequestMapping( "/show")
     @ResponseBody
     public List<Student> show() {
+        flag=true;
         if (!flag){
             commitEventUpdate();
             commitEventService.updateStudent();
         }
-        flag=true;
         //
         List<Student> students=studentService.studentList();
         return students;

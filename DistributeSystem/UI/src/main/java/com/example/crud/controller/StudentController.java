@@ -6,6 +6,7 @@ import com.example.crud.entity.CommitEvent;
 import com.example.crud.entity.Student;
 import com.example.crud.service.CommitEventService;
 import com.example.crud.service.StudentService;
+import com.example.crud.utils.CpachaUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.internal.LinkedTreeMap;
@@ -16,8 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -50,7 +55,7 @@ public class StudentController {
             String url=prefix+projectName+suffix;
 
             //com.RESTCall restCall =new RESTCall();
-            String token="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";//personal
+            String token="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";//personal
             FutureTask<ArrayList<LinkedTreeMap<String,Object>>>
                     task = new FutureTask<ArrayList<LinkedTreeMap<String,Object>>>(()->{
                 String serviceUrl="http://USERSERVICE/getStudentInfo";// 在userservice里找getStudentInfo
@@ -112,6 +117,14 @@ public class StudentController {
         }
 
     }
+
+    //登录界面
+    @RequestMapping("/tologin")
+    public String tologin() {
+
+        return "login";
+    }
+
     //跳转到水球图页面
     @RequestMapping("/progress")
     public String progress() {
@@ -123,6 +136,22 @@ public class StudentController {
     public String showe() {
 
         return "success";
+    }
+
+    @GetMapping("/checkCode")
+    public void generateCpacha(HttpServletRequest request, HttpServletResponse response,
+                               @RequestParam(value="vl",defaultValue="4",required=false) Integer vl,
+                               @RequestParam(value="w",defaultValue="110",required=false) Integer w,
+                               @RequestParam(value="h",defaultValue="39",required=false) Integer h){
+        CpachaUtil cpachaUtil = new CpachaUtil(vl, w, h);
+        String generatorVCode = cpachaUtil.generatorVCode();
+        //request.getSession().setAttribute(Const.CODE, generatorVCode);
+        BufferedImage generatorRotateVCodeImage = cpachaUtil.generatorRotateVCodeImage(generatorVCode, true);
+        try {
+            ImageIO.write(generatorRotateVCodeImage, "gif", response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //登录逻辑实现

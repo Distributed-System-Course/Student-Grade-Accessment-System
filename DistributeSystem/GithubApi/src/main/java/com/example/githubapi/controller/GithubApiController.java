@@ -16,7 +16,7 @@ public class GithubApiController {
     @PostMapping("getStudentInfo")
     public ApiResult getStudentInfo(@RequestBody ApiRequest apiRequest){
         ApiResult apiResult=new ApiResult();
-        String token="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";
+        String token="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";
         RESTCall restCall= new RESTCall();
         apiResult.setTable(restCall.returnTable(apiRequest.getApiUrl(),token));
         return apiResult;

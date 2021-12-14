@@ -9,9 +9,13 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://10.151.115.122:8761/eureka/ #http://localhost:8761/eureka/
+      defaultZone: http://10.151.18.17:8761/eureka/ #http://localhost:8761/eureka/
 #给登录微服务设置一个名字
 spring:
+  auto:
+    openurl: true
+  web:
+    loginurl: http://localhost:8080/tologin
   application:
     name: userui
   #数据库配置
