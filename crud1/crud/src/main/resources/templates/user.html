@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改用户</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+</head>
+<body>
+
+<div style="width:800px;height:100%;margin-left:270px;">
+    <h1 align="center" style="color: #00FFFF">用户信息信息</h1>
+    <form class="layui-form" action=" " method="post" style="align-self: center">
+        用户名：<input class="layui-input" type="text" th:value="${user.username}" name="username"/><br>
+        密  码：<input class="layui-input" type="text" th:value="${user.password}" name="password"/><br>
+        年  龄：<input class="layui-input" type="text" th:value="${user.age}" name="age"/><br>
+    </form>
+</div>
+<script th:src="@{/static/layui/layui.js}"></script>
+</body>
+</html>

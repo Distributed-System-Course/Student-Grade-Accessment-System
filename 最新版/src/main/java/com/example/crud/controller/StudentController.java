@@ -30,6 +30,7 @@ public class StudentController {
         ThreadPoolExecutor poolExecutor =(ThreadPoolExecutor) Executors.newCachedThreadPool();
         String[] names ={
                 "Student-Grade-Accessment-System",
+                "MUC2019CS-IRRASa",
                 "MUC2019CS-IRRASb",
                 "Piggy-ProjG",
                 "DataGripTools",
@@ -44,7 +45,7 @@ public class StudentController {
             String url=prefix+projectName+suffix;
 
             com.RESTCall restCall =new RESTCall();
-            String token="";//personal
+            String token="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";//personal
             FutureTask<ArrayList<LinkedTreeMap<String,Object>>>
                     task = new FutureTask<ArrayList<LinkedTreeMap<String,Object>>>(()->{
                 ArrayList<LinkedTreeMap<String,Object>> table= restCall.returnTable(url,token);
@@ -100,6 +101,13 @@ public class StudentController {
         }
 
     }
+    //登录界面
+    @RequestMapping("/tologin")
+    public String tologin() {
+
+        return "login";
+    }
+
     //跳转到水球图页面
     @RequestMapping("/progress")
     public String progress() {
@@ -129,7 +137,7 @@ public class StudentController {
     //学生信息展示
     @RequestMapping("/List")
     public String studentList(Model model ,@RequestParam(value = "start", defaultValue = "0") int start,
-    @RequestParam(value = "size", defaultValue = "7") int size) throws Exception{
+                              @RequestParam(value = "size", defaultValue = "7") int size) throws Exception{
         PageHelper.startPage(start,size,"id asc");
         List<Student> students = studentService.studentList();
         PageInfo<Student> page = new PageInfo<>(students);
@@ -140,11 +148,11 @@ public class StudentController {
     @RequestMapping( "/show")
     @ResponseBody
     public List<Student> show() {
-        flag=true;
         if (!flag){
             commitEventUpdate();
             commitEventService.updateStudent();
         }
+        flag=true;
         //
         List<Student> students=studentService.studentList();
         return students;

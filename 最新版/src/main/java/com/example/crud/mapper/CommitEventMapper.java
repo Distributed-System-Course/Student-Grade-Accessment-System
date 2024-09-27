@@ -12,6 +12,7 @@ public interface CommitEventMapper {
      * 查询所有事件
      * */
     List<CommitEvent> committeemen();
+    List<CommitEvent> clist();
     /*
      * 添加事件
      * */
@@ -28,7 +29,7 @@ public interface CommitEventMapper {
      * */
     CommitEvent findEventByIdAndDate(
             @Param("pid") String pid
-            ,@Param("date") String date);
+            ,@Param("commitDate") String commitDate);
     void updateStudent();
-
+    List<CommitEvent> findCommitByProject(String project);
 }

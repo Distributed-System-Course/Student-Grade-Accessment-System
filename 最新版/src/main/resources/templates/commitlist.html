@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>提交列表</title>
+  <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+  <script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+  <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+  <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info" style="width: 100%;height: 60%" align="center">
+  <div class="panel-heading" style="text-align:left;">
+    <h3 >
+      #提交信息表
+    </h3>
+  </div>
+  <div class="panel-body" style="height:390px;overflow-y:auto;padding:10px;">
+    <table class="layui-table">
+      <thead>
+      <tr style="text-align:center">
+        <th ><h5 align="center" style="color:deepskyblue ">姓名</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">日期</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">项目</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">增加行数</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">减少行数</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">改变行数</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">小组提交详情</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">小组增加行数详情</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">小组减少行数详情</h5></th>
+        <th ><h5 align="center" style="color:deepskyblue ">小组修改行数详情</h5></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="c:${pages.list}" style="text-align:center">
+
+        <td th:text="${c.name}"></td>
+        <td th:text="${c.commitDate}"></td>
+        <td th:text="${c.project}"></td>
+        <td th:text="${c.addLines}"></td>
+        <td th:text="${c.deleteLines}"></td>
+        <td th:text="${c.changeLines}"></td>
+        <td>
+          <a class="layui-btn layui-btn-primary layui-btn-xs" th:href="@{/date_commits(project=${c.project})}">详情</a>
+        </td>
+        <td>
+          <a class="layui-btn layui-btn-primary layui-btn-xs" th:href="@{/date_addLines(project=${c.project})}">详情</a>
+        </td>
+        <td>
+          <a class="layui-btn layui-btn-primary layui-btn-xs" th:href="@{/date_deleteLines(project=${c.project})}">详情</a>
+        </td>
+        <td>
+          <a class="layui-btn layui-btn-primary layui-btn-xs" th:href="@{/date_totalchangelines(project=${c.project})}">详情</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div   align="center">
+      <a th:href="@{/plist(start=0)}">[首  页]</a>
+      <!--
+      <a th:href="@{/plist(start=${pages.pageNum-1})}">[上一页]</a>
+      <a th:href="@{/plist(start=${pages.pageNum+1})}">[下一页]</a>
+      <a th:href="@{/plist(start=${pages.pages})}">[末  页]</a>
+        -->
+    </div>
+  </div>
+
+</div>
+<script th:src="@{/static/layui/layui.js}"></script>
+</body>
+
+</html>

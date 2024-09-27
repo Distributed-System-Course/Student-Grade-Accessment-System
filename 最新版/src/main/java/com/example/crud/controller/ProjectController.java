@@ -21,7 +21,7 @@ public class ProjectController {
     @RequestMapping("/plist")
     public String list(Model model ,@RequestParam(value = "start", defaultValue = "0") int start,
                        @RequestParam(value = "size", defaultValue = "5") int size){
-        PageHelper.startPage(start,size,"id asc");
+        PageHelper.startPage(start,size,"pid asc");
         List<Project> project= prodjectService.pList();
         PageInfo<Project> page = new PageInfo<>(project);
         model.addAttribute("pages", page);

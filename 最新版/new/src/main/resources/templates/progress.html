@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+</head>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+<script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+   <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+<body>
+<div class="container theme-showcase" role="main" style="width: 100%">
+    <div class="container" style="width: 100%">
+        <div class="row clearfix" style="width: 100%">
+            <div class="col-md-12 column" style="width: 100%">
+<div class="panel panel-info" style="width: 100%">
+
+    <div class="panel-heading" style="text-align:left;">
+        <h3 >
+            #项目详细信息
+        </h3>
+    </div>
+    <div class="panel-body" style="height:400px;overflow-y:auto;padding:10px;">
+        <div class="test-box">
+        <fieldset class="layui-elem-field " >
+
+            <div style="float: left;margin-left: 50px" >
+                <h3 align="center" style="color:#FD482C">项目名称</h3>
+                <p  th:text="${project.pname}" align="center"></p>
+            </div>
+            <div style="float: left;margin-left: 180px" >
+                <h3 align="center" style="color:#FD482C">成员1</h3>
+                <p  th:text="${project.student1}" align="center"></p>
+            </div>
+            <div style="float: left;margin-left: 180px" >
+                <h3 align="center" style="color:#FD482C">成员2</h3>
+                <p  th:text="${project.student2}" align="center"></p>
+            </div>
+            <div style="float: left;margin-left: 180px" >
+                <h3 align="center" style="color:#FD482C">成员3</h3>
+                <p  th:text="${project.student3}" align="center"></p>
+            </div>
+            <div class="layui-field-box" style="float: right" >
+
+                <div  th:with="percent=100/100" >
+
+                    <canvas class="thewater" id="c" ></canvas>
+                    <input type="text" id="r" th:value="${#numbers.formatDecimal(percent * 100, 1, 1)}" style="display: none">
+
+                </div>
+                <div align="center" >
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        项目完成度（查看小组成员提交情况）
+                    </button>
+                </div>
+            </div>
+
+        </fieldset>
+<!--            th:text="${product.intr}"-->
+
+        <h3 align="center" style="color:#FD482C" >全部项目介绍</h3>
+        <div   align="center">
+            <h5><b>1.项目组队系统 project-grouping-system</b></h5>
+            <p>老师给出的项目例如20个，班上60个学生每个人可以选择至少3个，第一个为首选，其余的为备选，填写腾讯文档或者EXCEL表格，设计算法为学生所选项目自动分组</p>
+            <p>3~5人一组，最后在网页上展示出各个项目组及成员情况。</p>
+            <h5><b>2.学生成绩评价系统 Student-Grade-Accessment-System</b></h5>
+            <p>实现从Gitee repositories中收集数据，展示每个项目进度及个人贡献，最后以图表展示形式做出报告。例如统计每个学生的commits总数</p>
+            <p>lines of code changed per week per user per project。主要功能通过访问Gitee API(java)实现数据获取</p>
+            <p>并且生成一个Library，提供给同组的成员调用，然后在web页面展示结果。</p>
+            <h5><b>3.智能房源查找系统 irras</b></h5>
+            <p>实现在某个指定地点（比如民大）查找周边距离最近、房租、房型满足客户需求的房源，并展示出查询结果。</p>
+            <p>需要采用爬虫技术从某些房产中介搜索房源信息，并借助百度或者腾讯地图API计算最短路径。</p>
+            <h5><b>4.数据抽取整合工具 data-extraction-and-integration-tool</b></h5>
+            <p>疫情期间各商场、银行等公共场所要求来访人员登记，数据以Excel格式进行记录保存，但是每天出入人员的数据可能有重复的，或者信息不全，也可能有其他异常情况</p>
+            <p>要求将电子表格整合在一起，识别并删除重复数据，提供一个可用的、干净的数据集，存入数据库，并具备特定查询功能的数据展示功能。</p>
+
+        </div>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="height:200px"></div>
+<script type="text/javascript">
+    var canvas = document.getElementById('c');
+    var ctx = canvas.getContext('2d');
+    var range = document.getElementById('r');
+
+    //range控件信息
+    var rangeValue = range.value;
+    var nowRange = 0; //用于做一个临时的range
+
+    //画布属性
+    var mW = canvas.width = 200;
+    var mH = canvas.height = 200;
+    var lineWidth = 2;
+
+    //圆属性
+    var r = mH / 2; //圆心
+    var cR = r - 16 * lineWidth; //圆半径
+
+    //Sin 曲线属性
+    var sX = 0;
+    var sY = mH / 2;
+    var axisLength = mW; //轴长
+    var waveWidth = 0.015 ; //波浪宽度,数越小越宽
+    var waveHeight = 6; //波浪高度,数越大越高
+    var speed = 0.1; //波浪速度，数越大速度越快
+    var xOffset = 0; //波浪x偏移量
+
+    ctx.lineWidth = lineWidth;
+
+    //画圈函数
+    var IsdrawCircled = false;
+    var drawCircle = function(){
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#1080d0';
+        ctx.arc(r, r, cR+5, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(r, r, cR, 0, 2 * Math.PI);
+        ctx.clip();
+
+    }
+
+    //画sin 曲线函数
+    var drawSin = function(xOffset){
+        ctx.save();
+
+        var points=[]; //用于存放绘制Sin曲线的点
+
+        ctx.beginPath();
+        //在整个轴长上取点
+        for(var x = sX; x < sX + axisLength; x += 20 / axisLength){
+            //此处坐标(x,y)的取点，依靠公式 “振幅高*sin(x*振幅宽 + 振幅偏移量)”
+            var y = -Math.sin((sX + x) * waveWidth + xOffset);
+
+            var dY = mH * (1 - nowRange / 100 );
+
+            points.push([x, dY + y * waveHeight]);
+            ctx.lineTo(x, dY + y * waveHeight);
+        }
+
+        //封闭路径
+        ctx.lineTo(axisLength, mH);
+        ctx.lineTo(sX, mH);
+        ctx.lineTo(points[0][0],points[0][1]);
+        ctx.fillStyle = '#1c86d1';
+        ctx.fill();
+
+        ctx.restore();
+    };
+
+    //写百分比文本函数
+    var drawText = function(){
+        ctx.save();
+
+        var size = 0.4*cR;
+        ctx.font = size + 'px Microsoft Yahei';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = "rgba(06, 85, 128, 0.8)";
+        ctx.fillText(~~nowRange + '%', r, r + size / 2);
+
+        ctx.restore();
+    };
+
+    var render = function(){
+        ctx.clearRect(0, 0, mW, mH);
+
+        rangeValue = range.value;
+
+        if(IsdrawCircled == false){
+            drawCircle();
+        }
+
+        if(nowRange <= rangeValue){
+            var tmp = 1;
+            nowRange += tmp;
+        }
+
+        if(nowRange > rangeValue){
+            var tmp = 1;
+            nowRange -= tmp;
+        }
+
+        drawSin(xOffset);
+        drawText();
+
+        xOffset += speed;
+        requestAnimationFrame(render);
+    }
+
+    render();
+</script>
+<script th:src="@{/static/layui/layui.js}"></script>
+</body>
+
+
+</html>
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+    <script src="https://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+    <link href="https://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+    <script src="https://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+
+</head>
+<body>
+                <div class="panel panel-info" style="width: 100%;height: 60%" align="center">
+                    <div class="panel-heading" style="text-align:left;">
+                        <h3 >
+                            #项目信息表
+                        </h3>
+                    </div>
+                    <div class="panel-body" style="height:390px;overflow-y:auto;padding:10px;">
+                        <table class="layui-table">
+                            <thead>
+                            <tr style="text-align:center">
+                                <th ><h5 align="center" style="color:deepskyblue ">项目编号</h5></th>
+                                <th ><h5 align="center" style="color:deepskyblue ">项目名</h5></th>
+                                <th ><h5 align="center" style="color:deepskyblue ">项目成员1</h5></th>
+                                <th ><h5 align="center" style="color:deepskyblue ">项目成员2</h5></th>
+                                <th ><h5 align="center" style="color:deepskyblue ">项目成员3</h5></th>
+                                <th ><h5 align="center" style="color:deepskyblue ">项目详情</h5></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="c:${pages.list}" style="text-align:center">
+
+                                <td th:text="${c.pid}"></td>
+                                <td th:text="${c.pname}"></td>
+                                <td th:text="${c.intr}"></td>
+                                <td th:text="${c.cprice}"></td>
+                                <td th:text="${c.tprice}"></td>
+                                <td>
+                                    <a class="layui-btn layui-btn-primary layui-btn-xs" th:href="@{/findProduct(pid=${c.pid})}">详情</a>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div   align="center">
+                            <a th:href="@{/plist(start=0)}">[首  页]</a>
+                            <a th:href="@{/plist(start=${pages.pageNum-1})}">[上一页]</a>
+                            <a th:href="@{/plist(start=${pages.pageNum+1})}">[下一页]</a>
+                            <a th:href="@{/plist(start=${pages.pages})}">[末  页]</a>
+                        </div>
+                    </div>
+
+                </div>
+<script th:src="@{/static/layui/layui.js}"></script>
+</body>
+
+</html>

@@ -87,14 +87,14 @@ header{
 
 
 .login_wrap{
-	background: url(../img/logo_bg.jpg) no-repeat center;
+	background: url() no-repeat center;
 	background-size: 100%;
 }
 .logo{
 	width: 500px;
 	height: 150px;
 	margin: 0px auto;
-	background: url(../img/logowz.png) no-repeat center;
+	background: url() no-repeat center;
 }
 .login_box{
 	width: 360px;
